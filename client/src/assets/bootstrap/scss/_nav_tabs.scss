@@ -1,0 +1,17 @@
+.nav-tabs {
+    .nav-link {
+        margin-bottom: calc(-1 * var(--#{$prefix}nav-tabs-border-width)); // stylelint-disable-line function-disallowed-list
+        background: none;
+        border: var(--#{$prefix}nav-tabs-border-width) solid transparent;
+        @include border-top-radius(var(--#{$prefix}nav-tabs-border-radius));
+
+        &:hover,
+        &:focus {
+            // Prevents active .nav-link tab overlapping focus outline of previous/next .nav-link
+            isolation: isolate;
+            border-color: var(--#{$prefix}nav-tabs-link-hover-border-color);
+        }
+
+    }
+
+}

@@ -1,0 +1,26 @@
+//  
+// 
+
+
+$ourbeige: #f2e8cf;
+$ourbeige-100: darken($ourbeige, 5);
+$ourbeige-200: darken($ourbeige, 8);
+$ourred: #bc4749;
+$ourgreen-100: #a7c957;
+$ourgreen-200: #6a994e;
+$ourgreen-300: #386641;
+
+
+
+$primary: $ourbeige;
+
+
+$theme-colors: (
+    "ourbeige": $ourbeige,
+    "ourbeige-100": $ourbeige-100,
+    "ourbeige-200": $ourbeige-200,
+    "ourred": $ourred,
+    "ourgreen-100": $ourgreen-100,
+    "ourgreen-200": $ourgreen-200,
+    "ourgreen-300": $ourgreen-300,
+);

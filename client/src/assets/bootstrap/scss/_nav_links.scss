@@ -1,0 +1,19 @@
+.nav-tabs {
+    .nav-link {
+
+        &.disabled,
+        &:disabled {
+            color: var(--#{$prefix}nav-link-disabled-color);
+            background-color: transparent;
+            border-color: transparent;
+        }
+    }
+}
+
+
+.nav-fill,
+.nav-justified {
+    .nav-item .nav-link {
+        width: 100%;
+    }
+}

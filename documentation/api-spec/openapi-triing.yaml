@@ -1,0 +1,48 @@
+openapi: 3.0.3
+info:
+  title: "Mars Concept Title - Mars-08"
+  description: "Description of the Mars API - Mars-08"
+  version: 0.0.1
+servers:
+  - url: https://project-ii.ti.howest.be/mars-08
+    description: "Public API"
+  - url: http://localhost:8080/
+    description: "Local API"
+paths:
+  /customer/dashboard:
+    get:
+      description: Data per month
+      operationId: getDashboard
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              examples:
+                two infinite things:
+                  value:
+                    1:
+                      garbage this week: 11561
+                      total users: 11561
+                      total garbage: 11561
+                      molecules revenue: 575.456 $
+                  description: Total revenue,users,garbage
+components:
+  schemas:
+    quote:
+      type: object
+      properties:
+        value:
+          type: string
+          x-faker: lorem.sentence
+          example: "Life is a disease: sexually transmitted, and invariably fatal."
+        id:
+          type: integer
+          minimum: 1
+          example: 8
+      required:
+        - value
+        - id
+      example:
+        value: See, the problem is that God gives men a brain and a penis, and only enough blood to run one at a time.
+        id: 89

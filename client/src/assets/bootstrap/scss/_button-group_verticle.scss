@@ -1,0 +1,40 @@
+.btn-group {
+
+    >.btn {
+        position: relative;
+        flex: 1 1 auto;
+    }
+
+}
+
+.btn-group-vertical {
+    >.btn {
+        width: 100%;
+    }
+
+    >.btn:not(:first-child) {
+        margin-top: -$btn-border-width;
+    }
+
+    >.btn~.btn {
+        @include border-top-radius(0);
+    }
+}
+
+.btn-group,
+.btn-group-vertical {
+    position: relative;
+    display: inline-flex;
+    vertical-align: middle; // match .btn alignment given font-size hack above
+
+    // Bring the hover, focused, and "active" buttons to the front to overlay
+    // the borders properly
+    >.btn:hover,
+    >.btn:focus,
+    >.btn:active,
+    >.btn.active,
+    >.btn-check:checked+.btn,
+    >.btn-check:focus+.btn {
+        z-index: 1;
+    }
+}

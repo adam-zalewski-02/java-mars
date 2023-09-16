@@ -1,0 +1,27 @@
+.btn-group-vertical {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+
+
+    >.btn-group {
+        width: 100%;
+    }
+
+    // Reset rounded corners
+    >.btn:not(:last-child):not(.dropdown-toggle),
+    >.btn-group:not(:last-child)>.btn {
+        @include border-bottom-radius(0);
+    }
+
+    >.btn-group:not(:first-child)>.btn {
+        @include border-top-radius(0);
+    }
+
+
+    >.btn-group:not(:first-child) {
+        margin-top: -$btn-border-width;
+    }
+
+
+}

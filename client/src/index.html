@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mars 08: Concept Title goes here</title>
+    <link rel="stylesheet" href="./assets/css/reset.css">
+    <link rel="stylesheet" href="./assets/css/screen.css">
+
+
+    <script src="https://kit.fontawesome.com/2bc24843b0.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/2bc24843b0.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script src="assets/js/chartssetup.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/localstorage.js"></script>
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/ourfetch.js"></script>
+    <script src="assets/js/subscriptions.js"></script>
+    <script src="assets/js/history.js"></script>
+    <script src="assets/js/notifications.js"></script>
+    <script src="assets/js/pickups.js"></script>
+    <script src="assets/js/orders.js"></script>
+    <script src="assets/js/defaultshistorys.js"></script>
+    <script defer src="./assets/js/chartsetupclient.js"></script>
+</head>
+
+<body id="body" class="bg-ourbeige">
+
+    <main>
+        <nav class="navbar navbar-expand-lg mb-3 p-3">
+            <ul class="nav nav-pills d-flex" id="pills-tab" role="tablist">
+                <li class="nav-item logo">
+                    <a class="navbar-brand" href="#">
+                        <img src="./assets/media/garmar_logo-01.png" alt="garmar_logo">
+                    </a>
+                </li>
+                <li class="mx-3 nav-item" role="presentation">
+                    <button class="nav-link btn btn-ourgreen-100 text-ourred active" id="pills-Dashboard-tab"
+                        data-bs-toggle="pill" data-bs-target="#pills-Dashboard" type="button" role="tab"
+                        aria-controls="pills-Dashboard" aria-selected="true">Dashboard</button>
+                </li>
+                <li class="mx-3 nav-item" role="presentation">
+                    <div class="dropdown">
+                        <a class="btn btn-ourgreen-100 text-ourred dropdown-toggle" href="#" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Pickup Request
+                        </a>
+
+                        <ul class="dropdown-menu bg-ourbeige border-ourbeige-100">
+                            <li>
+                                <button class="dropdown-item text-ourred" id="pills-Request-Pickup-tab"
+                                    data-bs-toggle="pill" data-bs-target="#pills-Request-Pickup" type="button"
+                                    role="tab" aria-controls="pills-Request-Pickup" aria-selected="false">Request
+                                    Pickup</button>
+                            </li>
+                            <li><button class="dropdown-item text-ourred" id="pills-Request-Pickup-History-tab"
+                                    data-bs-toggle="pill" data-bs-target="#pills-Request-Pickup-History" type="button"
+                                    role="tab" aria-controls="pills-Request-Pickup-History"
+                                    aria-selected="false">Request
+                                    history</button></li>
+                        </ul>
+                    </div>
+
+                </li>
+                <li class="mx-3 nav-item" role="presentation">
+                    <button class="nav-link text-ourred" id="pills-Manage-Subscription-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-Manage-Subscription" type="button" role="tab"
+                        aria-controls="pills-Manage-Subscription" aria-selected="false">Manage-Subscription</button>
+                </li>
+
+                <li class="mx-3 nav-item" role="presentation">
+                    <div class="dropdown">
+                        <a class="btn btn-ourgreen-100 text-ourred dropdown-toggle" href="#" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Buy Molecules
+                        </a>
+
+                        <ul class="dropdown-menu bg-ourbeige border-ourbeige-100">
+                            <li>
+                                <button class="dropdown-item text-ourred" id="pills-Buy-Molecules-tab"
+                                    data-bs-toggle="pill" data-bs-target="#pills-Buy-Molecules" type="button" role="tab"
+                                    aria-controls="pills-Buy-Molecules" aria-selected="false">Buy Molecules</button>
+                            </li>
+                            <li>
+                                <button class="dropdown-item text-ourred" id="pills-Buy-Molecules-History-tab"
+                                    data-bs-toggle="pill" data-bs-target="#pills-Buy-Molecules-History" type="button"
+                                    role="tab" aria-controls="pills-Buy-Molecules-History" aria-selected="false">Bought
+                                    Molecules History</button>
+                            </li>
+                        </ul>
+                    </div>
+
+
+                </li>
+            </ul>
+        </nav>
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-Dashboard" role="tabpanel"
+                aria-labelledby="pills-Dashboard-tab" tabindex="0">
+                <div class="container-fluid d-flex">
+                    <aside class="col text-ourred col-1 flex-wrap p-3">
+                        <p class="w-100 kgleft"><em class="fa-solid fa-trash"></em>
+                            <span>25</span>KG
+                            Left<br>this
+                            month
+                        </p>
+                        <p class="w-100 pickupsleft"><em class="fa-solid fa-truck"></em>
+                            <span>2</span>
+                            pickups
+                            Left<br>this
+                            month
+                        </p>
+
+                    </aside>
+                    <div class="col col-11 d-flex flex-wrap p-3">
+                        <h2 class="text-center w-100">Monthly usage</h2>
+                        <div id="dashboard-graph" class="dashboard-graph p-5 border border-ourbeige-100 flex-fill g">
+                            <canvas id="bar-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-Request-Pickup" role="tabpanel"
+                aria-labelledby="pills-Request-Pickup-tab" tabindex="0">
+                <div class="container-fluid d-flex">
+                    <div class="col col-11 d-flex flex-wrap p-3">
+                        <div class="p-5 border border-ourbeige-100 flex-fill g">
+                            <div class="tab-content" id="pills-tabseccondContentpickup">
+                                <div class="request_pickupscontent">
+                                    <label for="Item_for_pickup">Item for pickup</label>
+                                    <input type="text" class="form-control bg-ourbeige-100" id="Item_for_pickup"
+                                        placeholder="Item_for_pickup" aria-label="Item_for_pickup">
+
+                                    <label class="mt-3" for="getdatepickup">Date for pickup</label>
+                                    <input type="date" id="getdatepickup" class="btn bg-ourbeige-100"
+                                        name="getdatepickupname" value="2018-07-22" min="2018-01-01">
+
+                                    <input type="text" class="location_for_pickup bg-ourbeige-100 form-control mt-3"
+                                        placeholder="location_for_pickup" aria-label="location_for_pickup">
+
+                                    <button type="button" class="mt-3 btn btn-ourgreen-100 text-ourred request_pickup"
+                                        id="reqPickupButton" onclick="pickupNotification()">Order</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-Request-Pickup-History" role="tabpanel"
+                aria-labelledby="pills-Request-Pickup-History-tab" tabindex="0">
+                <div class="container-fluid d-flex">
+                    <div class="col col-11 d-flex flex-wrap p-3">
+                        <div class="p-5 border border-ourbeige-100 flex-fill g">
+                            <div class="tab-content" id="pills-tabseccondContentpickuphistory">
+                                <div class="request_pickupscontent">
+
+                                    <div class="contentrows d-flex bg-ourbeige-100 text-ourred p-1">
+                                        <div class="col-3">Item</div>
+                                        <div class="col-3">Date</div>
+                                        <div class="col-3">Location</div>
+                                        <div class="col-3"></div>
+                                    </div>
+                                    <div class="searchresults">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-Manage-Subscription" role="tabpanel"
+                aria-labelledby="pills-Manage-Subscription-tab" tabindex="0">
+                <div class="container-fluid d-flex">
+                    <div class="col col-12 d-flex flex-wrap p-3">
+                        <div class="p-5 border border-ourbeige-100 flex-fill g" id="subscriptionContainer">
+                            <template id="subscriptionTemplate">
+                                <div id="cardsContainer">
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-Buy-Molecules-History" role="tabpanel"
+                aria-labelledby="pills-Buy-Molecules-History-tab" tabindex="0">
+                <div class="container-fluid d-flex">
+                    <div class="col col-12 d-flex flex-wrap p-3">
+                        <div class="p-5 moleculesection border border-ourbeige-100 flex-fill g">
+                            <div class="contentrows d-flex bg-ourbeige-100 text-ourred p-1">
+                                <div class="col-3">Molecule</div>
+                                <div class="col-3"> Amount</div>
+                                <div class="col-3"> Pipe Number</div>
+                            </div>
+                            <div class="searchresults">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-Buy-Molecules" role="tabpanel"
+                aria-labelledby="pills-Buy-Molecules-tab" tabindex="0">
+                <div class="container-fluid d-flex">
+                    <div class="col col-12 d-flex flex-wrap p-3">
+                        <div class="p-5 moleculesection border border-ourbeige-100 flex-fill g">
+                            <div class="searchbar bg-ourbeige-100" id="searchbar">
+                                <div class="input-group mb-3">
+                                    <input type="text"
+                                        class="form-control bg-ourbeige-100 border-ourbeige-200 filtersearchbar"
+                                        placeholder="Searchterm" aria-label="Searchterm">
+                                    <div class="searchicon input-group-append">
+                                        <button class="btn btn-outline-secondary" type="button">Filter</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="contentrows d-flex bg-ourbeige-100 text-ourred p-1">
+                                <div class="col-3">Molecule</div>
+                                <div class="col-3">In stock:</div>
+                                <div class="col-3">Price:</div>
+                                <div class="col-3"></div>
+                            </div>
+
+                            <div class="searchresults">
+
+                            </div>
+                            <div class="moluculeform p-5 bg-ourbeige hidden">
+                                <a href="#" class="close close-buy-molecule-form"></a>
+                                <label for="molecultypes">Molecule Type</label>
+                                <select name="molecultypes"
+                                    class="bg-ourbeige-100 border-ourbeige-100 form-select molecultypes"
+                                    id="molecultypes" aria-label="molecules to buy">
+                                </select>
+
+                                <label class="mt-3" for="getdate">Date</label>
+                                <input type="date" id="getdate" class="btn bg-ourbeige-100 border-ourbeige-100"
+                                    name="getdatename" value="2018-07-22" min="2018-01-01">
+
+                                <select class="pipeline mt-3 form-select bg-ourbeige-100 border-ourbeige-100"
+                                    aria-label="molecules to buy">
+                                    <option value="1">Pipe 1</option>
+                                    <option value="2">Pipe 2</option>
+                                    <option value="3">Pipe 3</option>
+                                </select>
+
+                                <label class="mt-3" for="getamount">Amount</label>
+                                <input type="number" id="getamount" name="getamount" min="1"
+                                    class="bg-ourbeige-100 border-ourbeige-100 mt-3 form-control">
+
+
+                                <button type="button" class="mt-3 btn btn-ourgreen-100 text-ourred buy_molecule"
+                                    onclick="moleculeNotification()">Order</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

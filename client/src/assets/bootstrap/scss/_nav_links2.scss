@@ -1,0 +1,14 @@
+.nav-pills {
+    .nav-link {
+
+        background: none;
+        border: 0;
+        @include border-radius(var(--#{$prefix}nav-pills-border-radius));
+
+        &:disabled {
+            color: var(--#{$prefix}nav-link-disabled-color);
+            background-color: transparent;
+            border-color: transparent;
+        }
+    }
+}

@@ -1,0 +1,31 @@
+.card {
+    width: 25vw;
+}
+
+.card-body {
+    text-align: center;
+}
+
+.card-body p {
+    margin-top: 4rem;
+}
+
+.card-body .disclaimer {
+    position: absolute;
+    bottom: 0;
+    font-size: 0.75rem;
+}
+
+.card-body h5 {
+    margin-top: 4rem;
+    font-size: 2rem;
+}
+
+#subscriptionContainer {
+    display: flex !important;
+    justify-content: space-between;
+}
+
+.selectedCard {
+    background-color: $ourgreen-100 !important;
+}

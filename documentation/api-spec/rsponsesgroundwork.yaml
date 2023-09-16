@@ -1,0 +1,233 @@
+#  /customer/dashboard GET
+#   {
+#       garbage this week: "11561",
+#       total users: "11561",
+#       total garbage: "11561",
+#       molecules revenue: "575.456 $",
+#   }
+
+# /customer/dashboard/left-this-month GET (x kg and x items)
+# {
+#   amount: 25
+# }
+
+# /customer/pickup POST
+# request:
+# {
+#     date: 14/10/2045
+#     time: 15:15
+#     location: 1200 section D 55
+#     amount: 150
+# }
+# response:
+# {
+#     status: "confirmed"
+# }
+
+# /customer/pickup UPDATE
+# request:
+#     {
+#     data: 15/10/2045
+#     }
+# response:
+#     {
+#     status: "confirmed"
+#     }
+
+# /customer/pickup GET for history
+# {
+#     date: 14/10/2045
+#     time: 15:15
+#     location: 1200 section D 55
+#     amount: 150
+#     status: STATUS (string/ enum)
+# }
+
+# /customer/tiers GET (all tiers)
+# {
+#     tiers: {
+#     name: "Basic Package"
+#     limit: 200.0
+#     garbagefee: 1.5
+#     freepickups: 0
+#     pickupfee: 1.75
+#     cost: 99.95
+#     },
+#     {
+#     name: "Premium Package"
+#     limit: 800.0
+#     garbagefee: 1.5
+#     freepickups: 0
+#     pickupfee: 1.75
+#     cost: 199.95
+#     },
+#     {
+#     name: "Trashpanda Package"
+#     limit: 10000.0
+#     garbagefee: 1.5
+#     freepickups: 0
+#     pickupfee: 1.75
+#     cost: 299.95
+#     },
+# }
+
+# /customer/tiers/upgrade POST
+# request:
+#     {
+#     package: "Trashpanda Package"
+#     }
+# response:
+#     {
+#     status: "confirmed"
+#     }
+# /customer/tiers/current GET
+#     {
+#     name: "Basic Package"
+#     limit: 200.0
+#     garbagefee: 1.5
+#     freepickups: 0
+#     pickupfee: 1.75
+#     cost: 99.95
+#     }
+
+# /order
+# /order/all GET (available orders)
+# {
+#   1: { name: "Water", symbol: "H20", amountinstock: 145.000.000, price: 49 },
+#   2:
+#     {
+#       name: "Suylphuric Asid",
+#       symbol: "H20",
+#       amountinstock: 245.000.000,
+#       price: 125,
+#     },
+# }
+
+# /order/all/{idofmolecule} GET
+# {
+#   name: "Suylphuric Asid",
+#   symbol: "H20",
+#   amountinstock: 245.000.000,
+#   price: 125,
+# },
+
+# /order/all/{idofmolecule} POST
+# request {
+#   request: 1, (idofmolecule)
+#   amount: 15,
+# },
+# response {
+#   state: "Succesfull"
+# }
+
+# /order/cusomer/order/histoy GET
+# {
+#    {
+#      request: 1, (idofmolecule)
+#      amount: 15,
+#      state: "pending"
+#    },
+# }
+
+# /admin
+# /admin/garbage GET
+#   {
+#             garbage this week: "11561",
+#             total users: "11561",
+#             total garbage: "11561",
+#             molecules revenue: "575.456 $",
+#   }
+
+# /admin/customers GET
+#{
+#   jSON Object voor elke customer.
+#    {
+#        "customer_id" : "1",
+#        "name" : "Thor de Meestere",
+#        "subscription_type" : "2",
+#        "pipe_id" : "541561"
+#    }
+#}
+
+# /admin/customer/{idofcustomer} GET
+#    {
+#        "customer_id" : "1",
+#        "name" : "Thor de Meestere",
+#        "subscription_type" : "2",
+#        "pipe_id" : "541561"
+#    }
+
+# /admin/stored GET
+#      VOOR ELKE MOLECULE TYPE EEN JSON Object
+#       {
+#        ID : "1"
+#        name : "Iron"
+#        symbol : "FE"
+#        amount : "15"
+#        max_amount: "120000"
+#       }
+
+# /admin/stored/{idofcontainer} GET
+#       {
+#        ID : "1"
+#        name : "Iron"
+#        symbol : "FE"
+#        amount : "15"
+#        max_amount: "120000"
+#       }
+
+# /admin/orders GET
+#q          OBJECT VOOR ELKE ORDER
+#       {
+#        ID : "B24AD33"
+#        Date : "15/01/2024"
+#        Customer : "Dusty Depot"
+#        Molecule : "FE"
+#        amount : "15"
+#        Status: "Pending"
+#       }
+
+# /admin/specials GET
+#   JSON OBJECT VOOR ELKE SPECIAL
+#       {
+#        id : "1"
+#        Start_date : "24/04/2020"
+#        End_date : "31/04/2020"
+#        Product_name : "Coca-Cola"
+#        Amount : "3x 1.5L"
+#        amount : "15"
+#        Reward: "1 Coke"
+#       }
+
+# /admin/specials POST
+#       {
+#        Start_date : "24/04/2020"
+#        End_date : "31/04/2020"
+#        Product_name : "Coca-Cola"
+#        Amount : "3x 1.5L"
+#        amount : "15"
+#        Reward: "1 Coke"
+#       }
+# RESPONSE: 201 CREATED
+
+# /admin/specials/{IdOfSpecial} GET
+#       {
+#        id : "1"
+#        Start_date : "24/04/2020"
+#        End_date : "31/04/2020"
+#        Product_name : "Coca-Cola"
+#        Amount : "3x 1.5L"
+#        amount : "15"
+#        Reward: "1 Coke"
+#       }
+
+# /admin/specials/{IdOfSpecial} PUT
+#       {
+#        Start_date : "24/04/2020"
+#        End_date : "31/04/2020"
+#        Product_name : "Coca-Cola"
+#        Amount : "3x 1.5L"
+#        amount : "15"
+#        Reward: "1 Coke"
+#       }
+

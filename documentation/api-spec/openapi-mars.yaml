@@ -1,0 +1,920 @@
+openapi: 3.0.3
+info:
+  title: "GARMAR"
+  description: "Recycling Mars"
+  version: 0.0.1
+servers:
+  - url: https://project-ii.ti.howest.be/mars-08
+    description: "Public API"
+  - url: http://localhost:8080/
+    description: "Local API"
+paths:
+  /api/quotes:
+    post:
+      description: Create a nice quote
+      operationId: createQuote
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quote:
+                  type: string
+              required:
+                - quote
+            examples:
+              the-future:
+                value:
+                  quote: The future depends on what you do today.
+                description: You can't argue with the wise guy Mahatma Gandhi, can you?
+          text/plain:
+            schema:
+              type: string
+              example: "If everybody minded their own business, the world would go around a great deal faster than it does."
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/quote"
+  /api/quotes/{quoteId}:
+    get:
+      description: Get a nice quote
+      operationId: getQuote
+      parameters:
+        - in: path
+          name: quoteId
+          required: true
+          schema:
+            type: integer
+          description: The quote id
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/quote"
+              examples:
+                two infinite things:
+                  value:
+                    value: "Two things are infinite: the universe and human stupidity; and I'm not sure about the universe."
+                    id: 21
+                  description: Albert Einstein at his best :)
+                finding magic:
+                  value:
+                    value: "Those who don't believe in magic will never find it."
+                    id: 34
+                  description: Who doesn't love Roald Dahl?
+    put:
+      description: Update nice quote
+      operationId: updateQuote
+      parameters:
+        - in: path
+          name: quoteId
+          required: true
+          schema:
+            type: integer
+          description: The quote ID
+          example: 42
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quote:
+                  type: string
+              required:
+                - quote
+            examples:
+              dragons exist:
+                value:
+                  quote: "Fairy tales are more than true: not because they tell us that dragons exist, but because they tell us that dragons can be beaten."
+                description: Neil Gaiman, from the book Coraline
+              mistakes do something:
+                value:
+                  quote: "I hope that in this year to come, you make mistakes. Because if you are making mistakes... you're Doing Something."
+                description: Neil Gaiman is a genius.
+      responses:
+        "200":
+          description: Created
+    delete:
+      description: Delete nice quote
+      operationId: deleteQuote
+      parameters:
+        - in: path
+          name: quoteId
+          required: true
+          schema:
+            type: integer
+          description: The quote Id
+          example: 55
+      responses:
+        "200":
+          description: Deleted
+
+  /api/orders/{orderId}:
+    get:
+      tags:
+        - orders
+      description: Get order by orderId
+      operationId: getOrder
+      parameters:
+        - in: path
+          name: orderId
+          required: true
+          schema:
+            type: integer
+          description: The order id
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/order"
+    put:
+      tags:
+        - orders
+      description: Update an order
+      operationId: updateOrder
+      parameters:
+        - in: path
+          name: orderId
+          required: true
+          schema:
+            type: integer
+          description: The order id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  example: "PENDING"
+              required:
+                - status
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/order"
+          
+  /api/orders:
+    get:
+      tags:
+        - orders
+      description: Get all orders
+      operationId: getOrders
+      parameters:
+        - in: query
+          name: customerId
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/orders"
+    post:
+      tags:
+        - orders
+      description: Add new order
+      operationId: createOrder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customerId:
+                  type: integer
+                  example: 1
+                productId:
+                  type: integer
+                  example: 1
+                amountInKg:
+                  type: number
+                  example: 1500
+              required:
+                - customerId
+                - productId
+                - amountInKg
+      responses:
+        "201":
+          description: created
+  /api/products:
+    get:
+      tags:
+        - products
+      description: Get all products
+      operationId: getProducts
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/products"
+    post:
+      tags:
+        - products
+      description: Create a new product
+      operationId: createProduct
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Iron (Fe)"
+                pricePerKg:
+                  type: number
+                  example: 2.00
+                amountInStockInKg:
+                  type: number
+                  example: 15500
+              required:
+                - name
+                - pricePerKg
+                - amountInStockInKg
+      responses:
+        "201":
+          description: created
+  /api/products/{productId}:
+    get:
+      tags:
+        - products
+      description: Get product by id
+      operationId: getProduct
+      parameters:
+        - in: path
+          name: productId
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/product"
+    put:
+      tags:
+        - products
+      description: Update product
+      operationId: updateProduct
+      parameters:
+        - in: path
+          name: productId
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Iron (Fe)"
+                pricePerKg:
+                  type: number
+                  example: 2.00
+                amountInStockInKg:
+                  type: number
+                  example: 15000
+              required:
+                - name
+                - pricePerKg
+                - amountInStockInKg
+      responses:
+        "200":
+          description: Ok
+  /api/tiers:
+    get:
+      tags:
+        - tiers
+      description: Get all tiers
+      operationId: getTiers
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/tiers"
+    post:
+      tags:
+        - tiers
+      description: Create a tier
+      operationId: createTier
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Racoon"
+                monthlyLimitInKg:
+                  type: integer
+                  example: 200
+                feeAdditionalDisposalPerKg:
+                  type: number
+                  example: 1.50
+                freePickups:
+                  type: integer
+                  example: 0
+                pickupFeePerKg:
+                  type: number
+                  example: 2.00
+                paymentPerMonth:
+                  type: number
+                  example: 99.00
+              required:
+                - name
+                - monthlyLimitInKg
+                - feeAdditionalDisposalPerKg
+                - freePickups
+                - pickupFeePerKg
+                - paymentPerMonth
+      responses:
+        "201":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/tier"
+  /api/tiers/{tierId}:
+    get:
+      tags:
+        - tiers
+      description: Get tier by id
+      operationId: getTier
+      parameters:
+        - in: path
+          name: tierId
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/tier"
+    put:
+      tags:
+        - tiers
+      description: Update a tier
+      operationId: updateTier
+      parameters:
+        - in: path
+          name: tierId
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Racoon"
+                monthlyLimitInKg:
+                  type: integer
+                  example: 200
+                feeAdditionalDisposalPerKg:
+                  type: number
+                  example: 1.50
+                freePickups:
+                  type: integer
+                  example: 0
+                pickupFeePerKg:
+                  type: number
+                  example: 2.00
+                paymentPerMonth:
+                  type: number
+                  example: 99.00
+              required:
+                - name
+                - monthlyLimitInKg
+                - feeAdditionalDisposalPerKg
+                - freePickups
+                - pickupFeePerKg
+                - paymentPerMonth
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/tier"
+      
+  /api/customers:
+    get:
+      tags:
+      - customers
+      description: Get all customers
+      operationId: getCustomers
+      parameters:
+        - in: query
+          name: customerName
+          schema:
+            type: string
+            example: "Adam"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/customers"
+    post:
+      tags:
+      - customers
+      description: Create a customer
+      operationId: createCustomer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Tom Verdegem"
+                address:
+                  type: string
+                  example: "Address"
+                
+              
+      responses:
+        "201":
+          description: created
+  /api/customers/{customerId}:
+    get:
+      tags:
+      - customers
+      description: Get customer by id
+      operationId: getCustomer
+      parameters:
+        - in: path
+          name: customerId
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/customers/items"
+    put:
+      tags:
+      -  customers
+      description: Update customer
+      operationId: updateCustomer
+      parameters:
+        - in: path
+          name: customerId
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Adam"
+                address:
+                  type: string
+                  example: "Street"
+                tierId:
+                  type: integer
+                  example: 1
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/customers/items"
+  /api/customers/{customerId}/garbageDisposed:
+    put:
+      tags:
+      - customers
+      description: add disposed garbage to customer
+      operationId: addGarbage
+      parameters:
+        - in: path
+          name: customerId
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amountOfGarbage:
+                  type: number
+                  example: 2.35
+              required:
+                - amountOfGarbage
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/customers/items"
+  /api/pickups:
+    get:
+      tags:
+        - pickups
+      description: Get all pickups
+      operationId: getPickups
+      parameters:
+        - in: query
+          name: customerId
+          schema:
+            type: integer
+            example: 1
+        - in: query
+          name: customerName
+          schema:
+            type: string
+            example: "Adam"
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pickups'
+    post:
+      tags:
+        - pickups
+      description: Create new pickup
+      operationId: createPickup
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customerId:
+                  type: integer
+                  example: 1
+                requestedPickupDate:
+                  type: string
+                  format: date
+                  example: "2022-11-11"
+              required:
+                - customerId
+                - requestedPickupDate
+      responses:
+        "201":
+          description: created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pickups/items'
+                
+  /api/pickups/{pickupId}:
+    get:
+      tags:
+        - pickups
+      description: Get pickup by id
+      operationId: getPickup
+      parameters:
+        - in: path
+          name: pickupId
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pickups/items'
+    put:
+      tags:
+        - pickups
+      description: Update status of pickup
+      operationId: updatePickup
+      parameters:
+        - in: path
+          name: pickupId
+          required: true
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  example: "SUCCES"
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pickups/items'
+                
+  /api/pipes:
+    get:
+      tags:
+        - pipes
+      description: get all pipes
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pipes'
+    post:
+      tags:
+        - pipes
+      description: Create a pipe
+      operationId: createPipe
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pipeId:
+                  type: string
+                  example: "44dsf3r34"
+                customerId:
+                  type: integer
+                  example: "44"
+                status:
+                  type: string
+                  example: "unused"
+      responses:
+        "201":
+          description: created
+              
+  /api/pipes/{pipeId}:
+    get:
+      tags:
+        - pipes
+      description: get pipe by id
+      parameters:
+        - in: path
+          name: pipeId
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pipes'
+    delete:
+      tags:
+        - pipes
+      description: get pipe by id
+      parameters:
+        - in: path
+          name: pipeId
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        "200":
+          description: deleted
+    put:
+      tags:
+      - pipes
+      description: add customer to pipe
+      parameters:
+        - in: path
+          name: pipeId
+          required: true
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customerId:
+                  type: integer
+                  example: 1
+              required:
+                - customerId
+      responses:
+        "200":
+          description: updated
+      
+
+components:
+  schemas:
+    quote:
+      type: object
+      properties:
+        value:
+          type: string
+          x-faker: lorem.sentence
+          example: "Life is a disease: sexually transmitted, and invariably fatal."
+        id:
+          type: integer
+          minimum: 1
+          example: 8
+      required:
+        - value
+        - id
+      example:
+        value: See, the problem is that God gives men a brain and a penis, and only enough blood to run one at a time.
+        id: 89
+    order:
+      allOf:
+      - $ref: "#/components/schemas/orders/items"
+      required:
+        - id
+    orders:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+            example: 1
+          customer:
+            $ref: "#/components/schemas/customers/items"
+          product: 
+            $ref: "#/components/schemas/product"
+          amount:
+            type: integer
+            example: 15000
+          trackNumber:
+            type: string
+            example: "LE134596507BE"
+          status:
+            type: string
+            example: "PENDING"
+          orderDate:
+            type: string
+            format: date
+            example: "2022-11-11"
+    products:
+      type: array
+      items:
+        $ref: "#/components/schemas/product"
+    product:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Iron (Fe)"
+        pricePerKg:
+          type: number
+          example: 1.25
+        amountInStockInKg:
+          type: number
+          example: 1500
+    tiers:
+      type: array
+      items:
+        $ref: "#/components/schemas/tier"
+    tier:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Basic Package"
+        monthlyLimitInKg:
+          type: number
+          example: 200
+        feeAdditionalDisposalPerKg:
+          type: number
+          example: 1.50
+        freePickups:
+          type: integer
+          example: 0
+        pickupFeePerKg:
+          type: number
+          example: 2
+        paymentPerMonth:
+          type: number
+          example: 99.00
+    customers:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+            example: 1
+          name:
+            type: string
+            example: "Tom Verdegem"
+          address:
+            type: string
+            example: "Address"
+          tier:
+            $ref: "#/components/schemas/tier"
+          disposedGarbage:
+            type: number
+            example: 2.53
+    pickups:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+            example: 1
+          customer:
+            $ref: "#/components/schemas/customers/items"
+          dateOfRequest:
+            type: string
+            format: date
+            example: "2022-11-11"
+          requestedPickupDate:
+            type: string
+            format: date
+            example: "2022-11-11"
+          status:
+            type: string
+            example: "PENDING"
+    pipes:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+            example: 1
+          Customer:
+            $ref: "#/components/schemas/customers/items"
+          PipeNumber:
+            type: string
+            example: "1253625KLPN"
+          status:
+            type: string
+            example: "clear"
+            
